@@ -23,7 +23,7 @@ claude plugin install pstack@pstack-local
 
 or try it for one session from a clone: `claude --plugin-dir ./pstack-claude`.
 
-skills are namespaced: `/pstack:poteto-mode`, `/pstack:setup-pstack`, and so on. the scripts need node 24.2+ and pnpm.
+skills are namespaced: `/pstack:poteto-mode`, `/pstack:setup-pstack`, and so on. the scripts need node 24.2+ and pnpm 10+.
 
 ### what changed from the cursor version
 
