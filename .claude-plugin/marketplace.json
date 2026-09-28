@@ -1,0 +1,13 @@
+{
+  "name": "pstack-local",
+  "owner": { "name": "local" },
+  "description": "Local marketplace for the Claude Code port of pstack",
+  "plugins": [
+    {
+      "name": "pstack",
+      "source": "./",
+      "description": "poteto's rigorous agent workflows: poteto-mode, playbooks, principles, arena, swarm, interrogate, how, why.",
+      "category": "developer-tools"
+    }
+  ]
+}
