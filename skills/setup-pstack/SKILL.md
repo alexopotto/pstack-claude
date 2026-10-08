@@ -11,7 +11,7 @@ Write `~/.claude/rules/pstack-models.md`, a user-level rule Claude Code loads in
 
 ### 1. Know the models
 
-Agent subagents take a `model` alias: `opus`, `fable`, `sonnet`, or `haiku`. A full model id (for example `claude-opus-5-5`) also works. `inherit-parent` and `auto` are pstack aliases, not Agent values: both mean omit `model`, so the role runs on the parent chat model. If the user names a full id, confirm it by spawning a one-line Agent call with that `model` before writing it.
+Agent subagents take a `model` alias: `opus`, `sonnet`, or `haiku`. A full model id (for example `claude-opus-5-5`) also works. `inherit-parent` and `auto` are pstack aliases, not Agent values: both mean omit `model`, so the role runs on the parent chat model. If the user names a full id, confirm it by spawning a one-line Agent call with that `model` before writing it.
 
 ### 2. Load current state
 
@@ -19,20 +19,20 @@ The default role-to-model mapping is the rule shape shown in step 5 below. If `~
 
 ### 3. Budget, map, and confirm
 
-**(a) Ask for a budget.** Use AskUserQuestion. Offer these four options with these exact labels, and name the current budget when the rule records one.
+**(a) Ask for a budget.** Use AskUserQuestion. Offer these four options with these exact labels, and name the current budget when the rule records one. With no rule, say that `large` matches the skill defaults.
 
-- `unlimited — keep defaults`
+- `unlimited — opus everywhere`
 - `large — opus judgment, sonnet code`
 - `medium — sonnet everywhere`
 - `small — sonnet judgment, haiku code`
 
-**(b) Apply it.** Build the working table from the step 5 defaults, and on a re-run keep any role the user changed by hand or set to an alias (`inherit-parent`, `auto`). `unlimited` keeps the table. `large` replaces `fable` with `opus` and keeps the rest. `medium` sets every real entry to `sonnet`. `small` sets judgment roles (`judgment and prose`, `hardest tasks`, `how explainer`, `why synthesizer`, `reflect judgment, divergent, synthesizer`) to `sonnet` and every other entry to `haiku`. Panel lists keep their length, so fan-out counts do not change.
+**(b) Apply it.** Build the working table from the step 5 defaults, and on a re-run keep any role the user changed by hand or set to an alias (`inherit-parent`, `auto`). `unlimited` sets every real entry to `opus`. `large` keeps the table. `medium` sets every real entry to `sonnet`. `small` sets judgment roles (`judgment and prose`, `hardest tasks`, `how explainer`, `why synthesizer`, `reflect judgment, divergent, synthesizer`) to `sonnet` and every other entry to `haiku`. Panel lists keep their length, so fan-out counts do not change.
 
-**(c) Show the roles and confirm.** Show every role with its model. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering `opus`, `fable`, `sonnet`, `haiku`, `inherit-parent`, and `auto`. Use AskUserQuestion. For panel roles (arena runners, architect runners, interrogate reviewers) the value is a list, and one subagent runs per entry, alias entries included, so the list length sets the count. `arena cross-judge pool` is also a list, but Arena selects one value from it that differs from the parent's model when possible. `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
+**(c) Show the roles and confirm.** Show every role with its model. Also list each line step 2 dropped. Ask whether to accept as-is or change specific roles, offering `opus`, `sonnet`, `haiku`, `inherit-parent`, and `auto`. Use AskUserQuestion. For panel roles (arena runners, architect runners, interrogate reviewers) the value is a list, and one subagent runs per entry, alias entries included, so the list length sets the count. `arena cross-judge pool` is also a list, but Arena selects one value from it that differs from the parent's model when possible. `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
 
 ### 4. Validate
 
-Every value is `opus`, `fable`, `sonnet`, `haiku`, `inherit-parent`, `auto`, or a full id confirmed in step 1. Otherwise stop and ask again.
+Every value is `opus`, `sonnet`, `haiku`, `inherit-parent`, `auto`, or a full id confirmed in step 1. Otherwise stop and ask again.
 
 ### 5. Write the rule
 
@@ -41,7 +41,7 @@ Write `~/.claude/rules/pstack-models.md` with a `# budget` line with the chosen 
 ```
 # pstack model configuration. One line per role. Delete a line to fall back to the skill default.
 # `inherit-parent` or `auto` as a value: the role runs on the parent chat model (omit Agent `model`). Alias entries in a panel list still count toward its fan-out.
-# budget: unlimited — keep defaults
+# budget: large — opus judgment, sonnet code
 feature, refactoring: sonnet
 bug-fix: sonnet
 perf-issue: sonnet
@@ -52,13 +52,13 @@ how explorer: sonnet
 how explainer: opus
 why investigators: sonnet
 why synthesizer: opus
-reflect tooling: fable
+reflect tooling: sonnet
 reflect judgment, divergent, synthesizer: opus
-arena runners: opus, fable, sonnet
-arena cross-judge pool: opus, fable, sonnet
+arena runners: opus, sonnet
+arena cross-judge pool: opus, sonnet
 swarm workers: sonnet
-architect runners: opus, fable, sonnet
-interrogate reviewers: opus, fable, sonnet
+architect runners: opus, sonnet
+interrogate reviewers: opus, sonnet
 ```
 
 ### 6. Confirm

@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Poteto mode
 
-**Claude Code runtime.** `<pstack>` is `${CLAUDE_SKILL_DIR}/../..`. Every skill this file names is a user-only pstack skill: Read `<pstack>/skills/<name>/SKILL.md` and follow it. Playbook and reference paths resolve against `${CLAUDE_SKILL_DIR}`. The pstack store is `~/.claude/pstack/<slug>/` (the working directory with `/` and `.` turned into `-`). Subagents run through the Agent tool and take Claude model aliases (`opus`, `fable`, `sonnet`, `haiku`). Where pstack asks for a different model family, pick a different alias.
+**Claude Code runtime.** `<pstack>` is `${CLAUDE_SKILL_DIR}/../..`. Every skill this file names is a user-only pstack skill: Read `<pstack>/skills/<name>/SKILL.md` and follow it. Playbook and reference paths resolve against `${CLAUDE_SKILL_DIR}`. The pstack store is `~/.claude/pstack/<slug>/` (the working directory with `/` and `.` turned into `-`). Subagents run through the Agent tool and take Claude model aliases (`opus`, `sonnet`, `haiku`). Where pstack asks for a different model family, pick a different alias.
 
 ## Non-negotiables
 

@@ -27,7 +27,7 @@ skills are namespaced: `/pstack:poteto-mode`, `/pstack:setup-pstack`, and so on.
 
 ### what changed from the cursor version
 
-- models: subagents run claude models only. code roles default to `sonnet`, judgment to `opus`, and the three-model panels (arena, architect, interrogate) to `opus` / `fable` / `sonnet`. `/pstack:setup-pstack` writes `~/.claude/rules/pstack-models.md`.
+- models: subagents run claude models only. code roles default to `sonnet`, judgment to `opus`, and the two-model panels (arena, architect, interrogate) to `opus` / `sonnet`. defaults use only `opus`, `sonnet`, and `haiku`. `/pstack:setup-pstack` writes `~/.claude/rules/pstack-models.md`.
 - tools: `Task` → `Agent`, `generalPurpose` → `general-purpose`, `AskQuestion` → `AskUserQuestion`, cloud agents → `isolation: "worktree"`.
 - paths: `~/.cursor/...` → `~/.claude/...`. transcripts are read from `~/.claude/projects/<slug>/`.
 - routing: skills stay user-only. a `SessionStart` / `SubagentStart` hook tells claude where pstack is installed, so poteto-mode and its subagents read leaf skills by path.
@@ -44,7 +44,7 @@ two steps:
 
 new here? the [pstack guide](./docs/guide/README.md) walks you through a first real task, from setup and prompting through verification and overnight runs. stuck, or unsure which skill fits? ask [`/poteto-help`](./skills/poteto-help/SKILL.md).
 
-that's it. the other skills are situational; the mode skill uses them for you as needed. out of the box the mode splits work by model strength: code delegates (feature, refactoring, bug fix, perf, hillclimb) go to sonnet, while the hardest changes, prose, and judgment go to opus. the default panel is opus / fable / sonnet. [`/setup-pstack`](./skills/setup-pstack/SKILL.md) changes any of it.
+that's it. the other skills are situational; the mode skill uses them for you as needed. out of the box the mode splits work by model strength: code delegates (feature, refactoring, bug fix, perf, hillclimb) go to sonnet, while the hardest changes, prose, and judgment go to opus. the default panel is opus / sonnet. [`/setup-pstack`](./skills/setup-pstack/SKILL.md) changes any of it.
 
 ## usage
 
@@ -127,7 +127,7 @@ the full rules and playbooks live in [`skills/poteto-mode/SKILL.md`](./skills/po
 | skill | use it when |
 |---|---|
 | [`/poteto-mode`](./skills/poteto-mode/SKILL.md) | default entry point for any non-trivial task. |
-| [`/poteto-help`](./skills/poteto-help/SKILL.md) | you're new to pstack, or unsure which skill, playbook, or principle fits. finds out what you're trying to do, answers that part, and hands you a prompt to type. also loads on its own when you ask how to use pstack. |
+| [`/poteto-help`](./skills/poteto-help/SKILL.md) | you're new to pstack, or unsure which skill, playbook, or principle fits. finds out what you're trying to do, answers that part, and hands you a prompt to type. runs only when you type `/poteto-help`. |
 | [`/how`](./skills/how/SKILL.md) | you want a walkthrough of how a subsystem works. |
 | [`/why`](./skills/why/SKILL.md) | you want to know why something was built this way. discovers available MCPs at run time and queries each evidence category in parallel (source control, issue tracker, long-form docs, real-time chat, infra observability, error tracking, analytics warehouse). |
 | [`/recall`](./skills/recall/SKILL.md) | you're starting or resuming work and want your recent context on a topic rebuilt from your own chat history and the shared record, handed back as a tight current-state brief. |
@@ -270,7 +270,7 @@ type [`/automate-me`](./skills/automate-me/SKILL.md). it mines your recent trans
 
 models are configurable too. type [`/setup-pstack`](./skills/setup-pstack/SKILL.md). it detects the models you have access to and writes a small always-applied rule mapping each role (code, judgment, the review panels) to a model. every skill reads it and falls back to sensible defaults when the rule is absent, so you override only what you want.
 
-a rule written before 0.15.3 pins the old default models. delete those role lines, or delete the file, then run `/setup-pstack` again. a rerun keeps any role whose model differs from the default.
+when a default changes, a rule written before the change still pins the old default. delete those role lines, or delete the file, then run `/setup-pstack` again. a rerun keeps any role whose model differs from the default.
 
 ## automations
 
